@@ -1,0 +1,21 @@
+#! api-gateway-service.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Service
+metadata:
+    name: api-gateway-published
+    namespace: hackspark-deadlock-syndicate
+    labels:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: api-gateway
+spec:
+    selector:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: api-gateway
+    ports:
+        - name: api-gatewa-8000
+          port: 8000
+          protocol: TCP
+          targetPort: api-gatewa-8000
+
+# check if there is at least one published port

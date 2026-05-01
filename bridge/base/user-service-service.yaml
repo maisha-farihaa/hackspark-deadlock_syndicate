@@ -1,0 +1,19 @@
+#! user-service-service.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Service
+metadata:
+    name: user-service-published
+    namespace: hackspark-deadlock-syndicate
+    labels:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: user-service
+spec:
+    selector:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: user-service
+    ports:
+        - name: user-servi-8001
+          port: 8001
+          protocol: TCP
+          targetPort: user-servi-8001

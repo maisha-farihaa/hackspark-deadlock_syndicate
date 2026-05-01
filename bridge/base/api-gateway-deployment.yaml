@@ -1,0 +1,43 @@
+#! api-gateway-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: api-gateway
+    namespace: hackspark-deadlock-syndicate
+    labels:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: api-gateway
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: hackspark-deadlock_syndicate
+            com.docker.compose.service: api-gateway
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: hackspark-deadlock_syndicate
+                com.docker.compose.service: api-gateway
+                com.docker.compose.network.rentpi-net: "true"
+        spec:
+            containers:
+                - name: api-gateway
+                  image: hackspark-deadlock_syndicate-api-gateway
+                  imagePullPolicy: IfNotPresent
+                  env:
+                    - name: AGENTIC_SERVICE_URL
+                      value: "http://agentic-service:8004"
+                    - name: ANALYTICS_SERVICE_URL
+                      value: "http://analytics-service:8003"
+                    - name: PORT
+                      value: "8000"
+                    - name: RENTAL_SERVICE_URL
+                      value: "http://rental-service:8002"
+                    - name: USER_SERVICE_URL
+                      value: "http://user-service:8001"
+                  ports:
+                    - name: api-gatewa-8000
+                      containerPort: 8000

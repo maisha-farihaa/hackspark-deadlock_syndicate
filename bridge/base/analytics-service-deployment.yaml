@@ -1,0 +1,35 @@
+#! analytics-service-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: analytics-service
+    namespace: hackspark-deadlock-syndicate
+    labels:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: analytics-service
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: hackspark-deadlock_syndicate
+            com.docker.compose.service: analytics-service
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: hackspark-deadlock_syndicate
+                com.docker.compose.service: analytics-service
+                com.docker.compose.network.rentpi-net: "true"
+        spec:
+            containers:
+                - name: analytics-service
+                  image: hackspark-deadlock_syndicate-analytics-service
+                  imagePullPolicy: IfNotPresent
+                  env:
+                    - name: PORT
+                      value: "8003"
+                  ports:
+                    - name: analytics--8003
+                      containerPort: 8003

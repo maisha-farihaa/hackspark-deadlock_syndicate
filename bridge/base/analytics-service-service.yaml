@@ -1,0 +1,21 @@
+#! analytics-service-service.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Service
+metadata:
+    name: analytics-service-published
+    namespace: hackspark-deadlock-syndicate
+    labels:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: analytics-service
+spec:
+    selector:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: analytics-service
+    ports:
+        - name: analytics--8003
+          port: 8003
+          protocol: TCP
+          targetPort: analytics--8003
+
+# check if there is at least one published port

@@ -1,0 +1,23 @@
+# check if there is at least one published port
+
+#! agentic-service-service.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Service
+metadata:
+    name: agentic-service-published
+    namespace: hackspark-deadlock-syndicate
+    labels:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: agentic-service
+spec:
+    selector:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: agentic-service
+    ports:
+        - name: agentic-se-8004
+          port: 8004
+          protocol: TCP
+          targetPort: agentic-se-8004
+
+# check if there is at least one published port

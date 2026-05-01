@@ -1,0 +1,11 @@
+#! analytics-service-service.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Service
+metadata:
+    name: analytics-service-published
+    namespace: hackspark-deadlock-syndicate
+spec:
+    type: LoadBalancer
+
+# check if there is at least one published port

@@ -1,0 +1,35 @@
+#! rental-service-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: rental-service
+    namespace: hackspark-deadlock-syndicate
+    labels:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: rental-service
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: hackspark-deadlock_syndicate
+            com.docker.compose.service: rental-service
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: hackspark-deadlock_syndicate
+                com.docker.compose.service: rental-service
+                com.docker.compose.network.rentpi-net: "true"
+        spec:
+            containers:
+                - name: rental-service
+                  image: hackspark-deadlock_syndicate-rental-service
+                  imagePullPolicy: IfNotPresent
+                  env:
+                    - name: PORT
+                      value: "8002"
+                  ports:
+                    - name: rental-ser-8002
+                      containerPort: 8002

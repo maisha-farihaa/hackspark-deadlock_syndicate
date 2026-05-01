@@ -1,0 +1,35 @@
+#! agentic-service-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: agentic-service
+    namespace: hackspark-deadlock-syndicate
+    labels:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: agentic-service
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: hackspark-deadlock_syndicate
+            com.docker.compose.service: agentic-service
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: hackspark-deadlock_syndicate
+                com.docker.compose.service: agentic-service
+                com.docker.compose.network.rentpi-net: "true"
+        spec:
+            containers:
+                - name: agentic-service
+                  image: hackspark-deadlock_syndicate-agentic-service
+                  imagePullPolicy: IfNotPresent
+                  env:
+                    - name: PORT
+                      value: "8004"
+                  ports:
+                    - name: agentic-se-8004
+                      containerPort: 8004

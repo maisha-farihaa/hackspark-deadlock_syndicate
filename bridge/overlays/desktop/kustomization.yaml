@@ -1,0 +1,12 @@
+#! kustomization.yaml
+# Generated code, do not edit
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+    - ../../base
+patches:
+    - path: agentic-service-service.yaml
+    - path: analytics-service-service.yaml
+    - path: api-gateway-service.yaml
+    - path: rental-service-service.yaml
+    - path: user-service-service.yaml

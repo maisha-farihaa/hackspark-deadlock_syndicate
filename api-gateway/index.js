@@ -1,18 +1,21 @@
 const express = require('express');
 const axios = require('axios');
-const app = express();
 
+const app = express();
 app.use(express.json());
 
+// ✅ Use Docker service URLs (env based)
 const services = {
-  'user-service': 'http://user-service:8001',
-  'rental-service': 'http://rental-service:8002',
-  'analytics-service': 'http://analytics-service:8003',
-  'agentic-service': 'http://agentic-service:8004',
+  'user-service': process.env.USER_SERVICE_URL || 'http://user-service:8001',
+  'rental-service': process.env.RENTAL_SERVICE_URL || 'http://rental-service:8002',
+  'analytics-service': process.env.ANALYTICS_SERVICE_URL || 'http://analytics-service:8003',
+  'agentic-service': process.env.AGENTIC_SERVICE_URL || 'http://agentic-service:8004',
 };
 
+// ---------------- STATUS ----------------
 app.get('/status', async (req, res) => {
   const downstream = {};
+
   await Promise.all(
     Object.entries(services).map(async ([name, url]) => {
       try {
@@ -23,35 +26,99 @@ app.get('/status', async (req, res) => {
       }
     })
   );
-  res.json({ service: 'api-gateway', status: 'OK', downstream });
+
+  res.json({
+    service: 'api-gateway',
+    status: 'OK',
+    downstream
+  });
 });
 
-app.use('/users', (req, res) => {
-  const url = `${services['user-service']}${req.originalUrl}`;
-  axios({ method: req.method, url, data: req.body, headers: req.headers })
-    .then(r => res.status(r.status).json(r.data))
-    .catch(e => res.status(e.response?.status || 500).json(e.response?.data || { error: 'Service error' }));
+// ---------------- USER ROUTES ----------------
+app.use('/users', async (req, res) => {
+  try {
+    const url = `${services['user-service']}${req.originalUrl}`;
+
+    const response = await axios({
+      method: req.method,
+      url,
+      data: req.body,
+      headers: req.headers
+    });
+
+    res.status(response.status).json(response.data);
+
+  } catch (e) {
+    res.status(e.response?.status || 500).json(
+      e.response?.data || { error: 'User service error' }
+    );
+  }
 });
 
-app.use('/rentals', (req, res) => {
-  const url = `${services['rental-service']}${req.originalUrl}`;
-  axios({ method: req.method, url, data: req.body, headers: req.headers })
-    .then(r => res.status(r.status).json(r.data))
-    .catch(e => res.status(e.response?.status || 500).json(e.response?.data || { error: 'Service error' }));
+// ---------------- RENTAL ROUTES ----------------
+app.use('/rentals', async (req, res) => {
+  try {
+    const url = `${services['rental-service']}${req.originalUrl}`;
+
+    const response = await axios({
+      method: req.method,
+      url,
+      data: req.body,
+      headers: req.headers
+    });
+
+    res.status(response.status).json(response.data);
+
+  } catch (e) {
+    res.status(e.response?.status || 500).json(
+      e.response?.data || { error: 'Rental service error' }
+    );
+  }
 });
 
-app.use('/analytics', (req, res) => {
-  const url = `${services['analytics-service']}${req.originalUrl}`;
-  axios({ method: req.method, url, data: req.body, headers: req.headers })
-    .then(r => res.status(r.status).json(r.data))
-    .catch(e => res.status(e.response?.status || 500).json(e.response?.data || { error: 'Service error' }));
+// ---------------- ANALYTICS ROUTES ----------------
+app.use('/analytics', async (req, res) => {
+  try {
+    const url = `${services['analytics-service']}${req.originalUrl}`;
+
+    const response = await axios({
+      method: req.method,
+      url,
+      data: req.body,
+      headers: req.headers
+    });
+
+    res.status(response.status).json(response.data);
+
+  } catch (e) {
+    res.status(e.response?.status || 500).json(
+      e.response?.data || { error: 'Analytics service error' }
+    );
+  }
 });
 
-app.use('/chat', (req, res) => {
-  const url = `${services['agentic-service']}${req.originalUrl}`;
-  axios({ method: req.method, url, data: req.body, headers: req.headers })
-    .then(r => res.status(r.status).json(r.data))
-    .catch(e => res.status(e.response?.status || 500).json(e.response?.data || { error: 'Service error' }));
+// ---------------- AGENTIC ROUTES ----------------
+app.use('/chat', async (req, res) => {
+  try {
+    const url = `${services['agentic-service']}${req.originalUrl}`;
+
+    const response = await axios({
+      method: req.method,
+      url,
+      data: req.body,
+      headers: req.headers
+    });
+
+    res.status(response.status).json(response.data);
+
+  } catch (e) {
+    res.status(e.response?.status || 500).json(
+      e.response?.data || { error: 'Agentic service error' }
+    );
+  }
 });
 
-app.listen(8000, () => console.log('api-gateway running on port 8000'));
+// ---------------- START ----------------
+app.listen(8000, () => {
+  console.log('api-gateway running on port 8000');
+});

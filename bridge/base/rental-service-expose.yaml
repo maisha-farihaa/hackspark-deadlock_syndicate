@@ -1,0 +1,18 @@
+#! rental-service-expose.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Service
+metadata:
+    name: rental-service
+    namespace: hackspark-deadlock-syndicate
+    labels:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: rental-service
+spec:
+    selector:
+        com.docker.compose.project: hackspark-deadlock_syndicate
+        com.docker.compose.service: rental-service
+    ports:
+        - name: rental-ser-8002
+          port: 8002
+          targetPort: rental-ser-8002
