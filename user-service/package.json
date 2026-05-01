@@ -2,17 +2,12 @@
   "name": "user-service",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
-<<<<<<< HEAD
-    "express": "^4.18.2",
     "bcrypt": "^5.1.0",
-    "jsonwebtoken": "^9.0.0",
-=======
-    "axios": "^1.6.0",
-    "bcrypt": "^5.1.1",
-    "express": "^4.22.1",
-    "jsonwebtoken": "^9.0.3",
->>>>>>> 38fb56c (docker)
-    "pg": "^8.11.0"
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0"
   }
 }
